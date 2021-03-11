@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="car" class="pojo.Car" >
+        <property name="carName" value="五菱宏光" />
+    </bean>
+    <!--为admin类型里面的自定义类型属性赋值-->
+    <!--  ref叫手动赋值  -->
+    <!--  自动装配（自动赋值）  -->
+    <!--atuowire:
+        -default:不自动装配
+        -byName:在Admin类中有Car car;上面又有id=car的bean;就会以属性名作为id去容器中找到这个组件，给他赋值
+        -byType:private Car car;以属性类型作为查找依据去容器中找这个类型，赋值
+        -constructor:按照构造器进行赋值；如果admin中有一个有参构造器，这个构造器中有car
+        -no:同default
+
+        按照构造器进行赋值;
+        1)、先按照有参构造器参数的类型进行装配（成功就赋值)﹔没有就直接为组件装配null即可。
+        2)、如果按照类型找到了多个;参数的名作为id继续匹配;找到就装配;找不到就null;
+        3）、不会报错;
+    -->
+    <bean id="admin" class="pojo.Admin" autowire="constructor">
+<!--        <property name="car" ref="car" />-->
+
+    </bean>
+
+</beans>

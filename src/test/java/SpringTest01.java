@@ -2,10 +2,18 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pojo.Admin;
+import pojo.AdminInfo;
 import service.AdminService;
 
+import javax.sql.DataSource;
+import java.sql.SQLException;
+
 public class SpringTest01 {
-    ApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
+//    ApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
+//    ApplicationContext ac = new ClassPathXmlApplicationContext("beans02.xml");
+//    ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+    ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext03.xml");
+
     /**
      * 测试Spring的IOC
      */
@@ -69,4 +77,77 @@ public class SpringTest01 {
         System.out.println(adminService);//service获取成功，但其中dao变量还是null
 
     }
+    @Test
+    public void testAdmin2(){
+        Admin admin2 =(Admin) ac.getBean("admin2");
+        AdminInfo adminInfo = (AdminInfo)ac.getBean("adminInfo");
+        System.out.println("adminInfo默认值："+adminInfo);//会被修改
+        System.out.println(admin2);//会被修改
+        /**
+         * 因为在beans中是引用的adminInfo
+         */
+    }
+
+    /**
+     * 测试bean的重用
+     */
+    @Test
+     public void testParent(){
+        Admin admin =(Admin) ac.getBean("admin");
+        Admin admin3 =(Admin) ac.getBean("admin3");
+        System.out.println(admin);
+        System.out.println(admin3);
+    }
+
+    /**
+     * 所谓bean的依赖其实就是bean的创建顺序
+     */
+    @Test
+    public void testBeanDep(){
+        /**
+         * 和bean中先后顺序一样
+         * 按照bean的顺序创建
+         */
+        /**
+         * 可以改变bean的创建顺序
+         */
+    }
+
+    /**
+     * 测试bean工厂
+     */
+    @Test
+    public void testBeanFactory() {
+//        Object airPlane = ac.getBean("airPlane");
+//        System.out.println(airPlane.getClass());    //AirPlane
+//        System.out.println(airPlane);   //AirPlane{fdj='太行', yc='198.98m', personNumber=300, jzName='张三', fjsName='lfy'}
+        Object airPlane2 = ac.getBean("airPlane2");
+
+        System.out.println("容器启动完成..."+airPlane2);
+
+    }
+    @Test
+    public void testFactoryBean() {
+        Object factoryBeanImple = ac.getBean("myFactoryBeanImple");
+        System.out.println(factoryBeanImple);
+    }
+    @Test
+    public void testComboPool() throws SQLException {
+        //1、从容器中拿到连接池
+//        DataSource dataSource = (DataSource)ac.getBean("dataSource");
+        //2、按类型获取组件，可以获取到这个类型下所有子类的实现等等..
+        DataSource dataSource1 = ac.getBean(DataSource.class);
+
+        System.out.println(dataSource1.getConnection());
+    }
+
+    /**
+     * 测试自动装配（xml）
+     */
+    @Test
+    public void testAutoWiredByXml(){
+        Admin admin = ac.getBean(Admin.class);
+        System.out.println(admin);
+    }
+
 }
