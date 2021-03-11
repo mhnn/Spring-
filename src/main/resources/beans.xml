@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean id="admin" class="pojo.Admin" scope="prototype">
+                <!--基本类型，value-->
+<!--                <property name="aName" value="张三"/>-->
+                <!--对象，ref-->
+<!--                <property name="adminInfo" ref="adminInfo" />-->
+                <!--使用有参构造方法进行赋值-->
+                <!--public Admin(String aName, String aPassword, AdminInfo adminInfo) {
+                        name值要和形参一致
+                -->
+                <constructor-arg name="aName" value="张三"/>
+                <constructor-arg name="aPassword" value="root" />
+                <constructor-arg name="adminInfo" ref="adminInfo" />
+        </bean>
+                <!--    将UserInfo类作为bean装配到容器中。（UserInfo实例由Spring创建）    -->
+        <bean id="adminInfo" class="pojo.AdminInfo" >
+
+        </bean>
+        <!--    将AdminService作为bean装配到spring容器中    -->
+        <bean id="adminService" class="service.AdminService">
+                <property name="adminDao" ref="adminDao" />
+        </bean>
+        <bean id="adminDao" class="dao.AdminDao">
+
+        </bean>
+</beans>
