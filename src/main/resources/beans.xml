@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean id="admin" class="pojo.Admin" scope="prototype">
+                <!--基本类型，value-->
+<!--                <property name="aName" value="张三"/>-->
+                <!--对象，ref-->
+<!--                <property name="adminInfo" ref="adminInfo" />-->
+                <!--使用有参构造方法进行赋值-->
+                <!--public Admin(String aName, String aPassword, AdminInfo adminInfo) {
+                        name值要和形参一致
+                -->
+                <constructor-arg name="aName" value="张三"/>
+                <constructor-arg name="aPassword" value="root" />
+                <constructor-arg name="adminInfo" ref="adminInfo" />
+        </bean>
+                <!--    将UserInfo类作为bean装配到容器中。（UserInfo实例由Spring创建）    -->
+        <bean id="adminInfo" class="pojo.AdminInfo" >
+                <property name="info" value="admin的info" />
+        </bean>
+        <!--    将AdminService作为bean装配到spring容器中    -->
+        <bean id="adminService" class="service.AdminService">
+                <property name="adminDao" ref="adminDao" />
+        </bean>
+        <bean id="adminDao" class="com.atguigu.dao.AdminDao">
+
+        </bean>
+                <!--   级联修改     -->
+        <bean id="admin2" class="pojo.Admin" >
+                <property name="adminInfo" ref="adminInfo" >
+                </property>
+                <property name="adminInfo.info" value="级联修改adminInfo" />
+        </bean>
+                <!--   parent：指定当前bean的配置信息继承于哪个     -->
+        <bean id="admin3" class="pojo.Admin" parent="admin">
+                <property name="aName" value="李四" />
+        </bean>
+                <!--    abstract:使这个bean变为抽象的，不能获取实例，只能被用来继承    -->
+        <bean id="admin" class="pojo.Admin" abstract="true">
+        <!--基本类型，value-->
+                        <property name="aName" value="张三"/>
+        <!--对象，ref-->
+                        <property name="adminInfo" ref="adminInfo" />
+        </bean>
+
+
+</beans>
