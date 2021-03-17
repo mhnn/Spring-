@@ -1,6 +1,6 @@
 package service;
 
-import dao.AdminDao;
+import com.atguigu.dao.AdminDao;
 
 public class AdminService {
     AdminDao adminDao;

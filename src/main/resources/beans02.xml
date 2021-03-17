@@ -41,7 +41,6 @@
                 <constructor-arg name="jzName" value="张三" />
         </bean>
         <!--2、实例工厂
-
         -->
         <bean id="airPlaneInstanceFactory" class="factory.AirPlaneInstanceFactory" >
         </bean>

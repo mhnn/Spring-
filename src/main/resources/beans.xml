@@ -24,7 +24,7 @@
         <bean id="adminService" class="service.AdminService">
                 <property name="adminDao" ref="adminDao" />
         </bean>
-        <bean id="adminDao" class="dao.AdminDao">
+        <bean id="adminDao" class="com.atguigu.dao.AdminDao">
 
         </bean>
                 <!--   级联修改     -->
